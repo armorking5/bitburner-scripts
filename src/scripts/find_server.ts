@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NS } from '@ns';
 
 function recursiveScan(ns: NS, parent: string, server: string, target: string, route: string[]) {
@@ -22,7 +23,7 @@ function recursiveScan(ns: NS, parent: string, server: string, target: string, r
 
 export async function main(ns: NS): Promise<void> {
 	const args = ns.flags([["help", false]]);
-	const route = [];
+	const route: string[] = [];
 	const server = typeof args._[0] === 'string' ? args._[0] : (typeof args._[0] === 'boolean' ? 'NaN' : args._[0].toString(10))
 	if (!server || args.help) {
 		ns.tprint("This script helps you find a server on the network and shows you the path to get to it.");
@@ -33,14 +34,18 @@ export async function main(ns: NS): Promise<void> {
 	}
 
 	recursiveScan(ns, '', 'home', server, route);
-	for (const i in route) {
+	for (const i of route.keys()) {
 		await ns.sleep(500);
 		const extra = i > 0 ? "└ " : "";
 		ns.tprint(`${" ".repeat(i)}${extra}${route[i]}`);
 	}
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function autocomplete(data: , args: string[]): string[] {
+export function autocomplete(data: {
+	servers: string[]
+	txts: string[]
+	scripts: string[]
+	flags: never[]
+}, args: string[]): string[] {
 	return [...data.servers]
 }

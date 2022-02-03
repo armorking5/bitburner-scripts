@@ -28,5 +28,6 @@ export async function main(ns: NS): Promise<void> {
 		} else {
 			await ns.hack(target);
 		}
+		await ns.sleep(1000);
 	}
 }
