@@ -13,6 +13,7 @@ export async function main(ns: NS): Promise<void> {
 
 	while (ns.hacknet.numNodes() < cnt) {
 		res = ns.hacknet.purchaseNode();
+		await ns.sleep(100);
 		ns.print("Purchased hacknet Node with index " + res);
 	}
 
@@ -24,6 +25,7 @@ export async function main(ns: NS): Promise<void> {
 				await ns.sleep(3000);
 			}
 			res = ns.hacknet.upgradeLevel(i, 10);
+			await ns.sleep(100);
 			ns.print("Hacknet #" + i + " level upgraded");
 		}
 	}
@@ -38,6 +40,8 @@ export async function main(ns: NS): Promise<void> {
 				await ns.sleep(3000);
 			}
 			res = ns.hacknet.upgradeRam(i, 2);
+			await ns.sleep(100);
+
 			ns.print("Hacknet #" + i + " RAM upgraded");
 		}
 	}
@@ -52,6 +56,8 @@ export async function main(ns: NS): Promise<void> {
 				await ns.sleep(3000);
 			}
 			res = ns.hacknet.upgradeCore(i, 1);
+			await ns.sleep(100);
+
 			ns.print("Hacknet #" + i + " core upgraded");
 		}
 	}
