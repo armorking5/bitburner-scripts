@@ -10,7 +10,7 @@ export async function main(ns: NS): Promise<void> {
 	}
 
 	// Get potential servers connected to this one (only know-how to find new servers)
-	const potentialServers = ns.scan();
+	const potentialServers = ns.scan(argumentServer);
 	for (const server of potentialServers) {
 
 		ns.print('Server is ' + server);
