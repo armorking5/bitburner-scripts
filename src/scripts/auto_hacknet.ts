@@ -14,14 +14,19 @@ export async function main(ns: NS): Promise<void> {
 	while (ns.hacknet.numNodes() < cnt) {
 		res = ns.hacknet.purchaseNode();
 		await ns.sleep(100);
-		ns.print("Purchased hacknet Node with index " + res);
+		if (res === -1) {
+			ns.print("NODE BUY: Need $" + ns.hacknet.getPurchaseNodeCost() + " . Have $" + myMoney());
+			await ns.sleep(3000);
+		} else {
+			ns.print("Purchased hacknet Node with index " + res);
+		}
 	}
 
 	for (let i = 0; i < cnt; i++) {
-		while (ns.hacknet.getNodeStats(i).level <= 180) {
+		while (ns.hacknet.getNodeStats(i).level < 200) {
 			const cost = ns.hacknet.getLevelUpgradeCost(i, 10);
 			while (myMoney() < cost) {
-				ns.print("Need $" + cost + " . Have $" + myMoney());
+				ns.print("LEVEL BUY: Need $" + cost + " . Have $" + myMoney());
 				await ns.sleep(3000);
 			}
 			res = ns.hacknet.upgradeLevel(i, 10);
@@ -30,13 +35,13 @@ export async function main(ns: NS): Promise<void> {
 		}
 	}
 
-	ns.print("All nodes upgraded to level 180");
+	ns.print("All nodes upgraded to level 200");
 
 	for (let i = 0; i < cnt; i++) {
 		while (ns.hacknet.getNodeStats(i).ram < 64) {
 			const cost = ns.hacknet.getRamUpgradeCost(i, 2);
 			while (myMoney() < cost) {
-				ns.print("Need $" + cost + " . Have $" + myMoney());
+				ns.print("RAM BUY: Need $" + cost + " . Have $" + myMoney());
 				await ns.sleep(3000);
 			}
 			res = ns.hacknet.upgradeRam(i, 2);
@@ -49,10 +54,10 @@ export async function main(ns: NS): Promise<void> {
 	ns.print("All nodes upgraded to 64GB RAM");
 
 	for (let i = 0; i < cnt; i++) {
-		while (ns.hacknet.getNodeStats(i).cores < 8) {
+		while (ns.hacknet.getNodeStats(i).cores < 16) {
 			const cost = ns.hacknet.getCoreUpgradeCost(i, 1);
 			while (myMoney() < cost) {
-				ns.print("Need $" + cost + " . Have $" + myMoney());
+				ns.print("CORE BUY: Need $" + cost + " . Have $" + myMoney());
 				await ns.sleep(3000);
 			}
 			res = ns.hacknet.upgradeCore(i, 1);
