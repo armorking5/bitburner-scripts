@@ -10,7 +10,7 @@ https.get(url, (res) => {
     res.pipe(file)
 
     file.on('finish', () => {
-        file.close
+        file.close()
         console.log('Netscript Type Definitions Updated')
     })
 
